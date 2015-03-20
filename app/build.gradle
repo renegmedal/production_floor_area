@@ -1,0 +1,62 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:1.0.0'
+        classpath 'org.robolectric:robolectric-gradle-plugin:0.14.1'
+    }
+}
+
+allprojects {
+    repositories {
+        mavenCentral()
+    }
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'robolectric'
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion "21.1.1"
+    defaultConfig {
+        applicationId "application.beacon.industrial"
+        minSdkVersion 19
+        targetSdkVersion 21
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    sourceSets {
+        androidTest.setRoot('src/androidTest')
+    }
+    productFlavors {
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    dependencies {
+        // compile project(':android-beacon-library')
+        compile 'org.altbeacon:android-beacon-library:2+@aar'
+        //compile 'org.altbeacon:android-beacon-library:2.1.2'
+    }
+    compile 'com.android.support:appcompat-v7:21.0.3'
+    compile 'com.jakewharton.timber:timber:2.5.1'
+    androidTestCompile 'junit:junit:4.12'
+    androidTestCompile 'org.robolectric:robolectric:2.4'
+    compile 'com.squareup.retrofit:retrofit:1.9.0'
+    compile 'com.android.support:recyclerview-v7:21.0.3'
+    compile 'io.reactivex:rxandroid:0.24.0'
+}
+
+robolectric {
+    include '**/*Test.class'
+    maxHeapSize = "2048m"
+}
